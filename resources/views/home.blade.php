@@ -15,8 +15,6 @@
                     @endif
                     <br></br>
                     <p>You are logged in {{Auth::user()->name}} !</p>
-                    <p>Count of your deposit: {{$count}}.</p>
-                    <p>Total sum of your deposit: ${{$total_sum}}.</p>
                 </div>
             </div>
         </div>

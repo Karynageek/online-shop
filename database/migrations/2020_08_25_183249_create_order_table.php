@@ -12,7 +12,7 @@ class CreateOrderTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('order', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->bigIncrements('id');
             $table->string('user_name');
@@ -21,7 +21,7 @@ class CreateOrderTable extends Migration {
             $table->string('user_comment')->nullable();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('product_id')->unsigned();
-            $table->enum('status', ['0', '1', '2', '3'])->default(0);
+            $table->enum('status', ['New order', 'Processing', 'Delivered', 'Closed'])->default('New order');
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
 
@@ -33,7 +33,7 @@ class CreateOrderTable extends Migration {
 
             $table->index('product_id');
             $table->foreign('product_id')
-                    ->references('id')->on('product');
+                    ->references('id')->on('products');
         });
     }
 
@@ -43,7 +43,7 @@ class CreateOrderTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('order');
+        Schema::dropIfExists('orders');
     }
 
 }

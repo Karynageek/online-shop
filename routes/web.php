@@ -26,16 +26,33 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('/user/create', 'AdminUserController@store')->name('form-admin-user-create');
         Route::get('/user/view', 'AdminUserController@show')->name('admin-user-view');
         Route::get('/user/edit/{id}', 'AdminUserController@edit')->name('admin-user-edit');
-        Route::post('/user/edit/{id}', 'AdminDepositController@update')->name('form-admin-user-edit');
+        Route::post('/user/edit/{id}', 'AdminUserController@update')->name('form-admin-user-edit');
         Route::get('/user/delete/{id}', 'AdminUserController@destroy')->name('admin-user-delete');
         Route::get('/user/search}', 'AdminUserController@search')->name('admin-user-search');
 
-        //Manage deposit: 
-        Route::get('/deposit/view', 'AdminDepositController@show')->name('admin-deposit-view');
-        Route::get('/deposit/edit/{id}', 'AdminDepositController@edit')->name('admin-deposit-edit');
-        Route::post('/deposit/edit/{id}', 'AdminDepositController@update')->name('form-admin-deposit-edit');
-        Route::get('/deposit/delete/{id}', 'AdminDepositController@destroy')->name('admin-deposit-delete');
-        Route::get('/deposit/run', 'AdminDepositController@runAccruals')->name('admin-deposit-run');
+        //Manage categories: 
+        Route::get('/category/create', 'AdminCategoryController@create')->name('admin-category-create');
+        Route::post('/category/create', 'AdminCategoryController@store')->name('form-admin-category-create');
+        Route::get('/category/view', 'AdminCategoryController@show')->name('admin-category-view');
+        Route::get('/category/edit/{id}', 'AdminCategoryController@edit')->name('admin-category-edit');
+        Route::post('/category/edit/{id}', 'AdminCategoryController@update')->name('form-admin-category-edit');
+        Route::get('/category/delete/{id}', 'AdminCategoryController@destroy')->name('admin-category-delete');
+        
+        //Manage products: 
+        Route::get('/product/create', 'AdminProductController@create')->name('admin-product-create');
+        Route::post('/product/create', 'AdminProductController@store')->name('form-admin-product-create');
+        Route::get('/product/view', 'AdminProductController@show')->name('admin-product-view');
+        Route::get('/product/edit/{id}', 'AdminProductController@edit')->name('admin-product-edit');
+        Route::post('/product/edit/{id}', 'AdminProductController@update')->name('form-admin-product-edit');
+        Route::get('/product/delete/{id}', 'AdminProductController@destroy')->name('admin-product-delete');
+        
+        //Manage orders: 
+        Route::get('/order/create', 'AdminOrderController@create')->name('admin-order-create');
+        Route::post('/order/create', 'AdminOrderController@store')->name('form-admin-order-create');
+        Route::get('/order/view', 'AdminOrderController@show')->name('admin-order-view');
+        Route::get('/order/edit/{id}', 'AdminOrderController@edit')->name('admin-order-edit');
+        Route::post('/order/edit/{id}', 'AdminOrderController@update')->name('form-admin-order-edit');
+        Route::get('/order/delete/{id}', 'AdminOrderController@destroy')->name('admin-order-delete');
     });
 });
 
@@ -43,21 +60,11 @@ Route::group(['prefix' => 'user'], function() {
     Route::group(['middleware' => ['auth', 'user']], function() {
         //Main user page:
         Route::get('/home', 'HomeController@index')->name('home');
-        //Deposit:
-        Route::get('/deposit/create', 'DepositController@create')->name('deposit-create');
-        Route::post('/deposit/create', 'DepositController@store')->name('form-deposit-create');
-        Route::get('/deposit/view', 'DepositController@show')->name('deposit-view');
-        //History page:
-        Route::get('/account/edit/{id}', 'AccountController@edit')->name('account-refill');
-        Route::post('/account/refill/{id}', 'AccountController@refill')->name('form-account-refill');
-        Route::post('/account/withdraw/{id}', 'AccountController@withdraw')->name('form-account-withdraw');
-        Route::get('/account/view', 'AccountController@show')->name('account-history');
+
         //Settings page:
         Route::get('/settings/edit/{id}', 'SettingsController@edit')->name('user-settings');
         Route::post('/settings/edit/nickname/{id}', 'SettingsController@updateNickname')->name('form-user-edit-nickname');
         Route::post('/settings/edit/pass/{id}', 'SettingsController@updatePass')->name('form-user-edit-pass');
-        //Team page:
-        Route::get('/team/view', 'TeamController@show')->name('team-view');
     });
 });
 

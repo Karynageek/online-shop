@@ -12,23 +12,23 @@ class CreateUsersTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('users', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->bigInteger('role_id')->unsigned();
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
-            
-            $table->index('role_id');
-            $table->foreign('role_id')
-                    ->references('id')
-                    ->on('roles');
-        });
+//        Schema::create('users', function (Blueprint $table) {
+//            $table->engine = 'InnoDB';
+//            $table->bigIncrements('id');
+//            $table->string('name');
+//            $table->string('email')->unique();
+//            $table->timestamp('email_verified_at')->nullable();
+//            $table->string('password');
+//            $table->rememberToken();
+//            $table->bigInteger('role_id')->unsigned();
+//            $table->dateTime('created_at')->nullable();
+//            $table->dateTime('updated_at')->nullable();
+//            
+//            $table->index('role_id');
+//            $table->foreign('role_id')
+//                    ->references('id')
+//                    ->on('roles');
+//        });
     }
 
     /**

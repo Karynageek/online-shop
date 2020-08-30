@@ -29,10 +29,13 @@
                         <th scope="col">Date create</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($users as $key => $value)
+                    @if($value->role_id==1)
                     <tr>
                         <td><p class="card-title">{{ $loop->index+1 }}</p></td>
                         <td><p class="card-title">{{ $value->id }}</p></td>
@@ -42,6 +45,7 @@
                         <td><a href="{{route('admin-user-edit', $value->id) }}" class="btn btn-primary">Edit</a></td>
                         <td><a href="{{route('admin-user-delete', $value->id) }}" class="btn btn-danger">Delete</a></td>
                     </tr>
+                    @endif
                     @endforeach
                 </tbody>
             </table>

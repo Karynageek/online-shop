@@ -13,7 +13,7 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"  crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
-        <title>{{ config('app.name', 'Bank') }}</title>
+        <title>{{ config('app.name', 'Shop') }}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <link rel="shortcut icon" href="https://cdn.icon-icons.com/icons2/1091/PNG/512/bank_78392.png" type="image/x-icon">
     </head>
@@ -22,7 +22,7 @@
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        Bank
+                        Jewerly
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
@@ -52,28 +52,23 @@
 
                             @if (Auth::user()->isUser())
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('deposit-create')}}">Investment</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('deposit-view')}}">Deposits</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('team-view')}}">Team</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('account-history')}}">History</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('user-settings', Auth::user()->id)}}">Settings</a>
+                                <a class="nav-link" href="{{ route('user-settings', Auth::user()->id) }}">Settings</a>
                             </li>
                             @endif
                             @if (Auth::user()->isAdmin())
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin-user-view') }}">List of Users</a>
+                                <a class="nav-link" href="{{ route('admin-user-view') }}">Users</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin-deposit-view') }}">List of Deposits</a>
+                                <a class="nav-link" href="{{ route('admin-category-view') }}">Categories</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin-product-view') }}">Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin-order-view') }}">Orders</a>
+                            </li>
+
                             @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

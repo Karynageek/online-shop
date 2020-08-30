@@ -6,15 +6,17 @@
  * and open the template in the editor.
  */
 
-namespace App\Http\Controllers;
-use App\History;
-use Illuminate\Support\Facades\View;
-use Auth;
 /**
- * Description of HistoryController
+ * Description of Deposit
  *
  * @author Karina
+ * 
  */
-class HistoryController extends Controller {
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model as Eloquent;
+
+class Product extends Eloquent {
 
 }
