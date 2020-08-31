@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Product;
 use App\Category;
@@ -38,15 +39,24 @@ class AdminProductController extends Controller {
      */
     public function store(ProductRequest $request) {
         $product = new Product;
+
         $product->name = $request->input('name');
         $product->price = $request->input('price');
         $product->count = $request->input('count');
+
+        $img = \Image::make($request->file('img'))->fit(300)->encode('jpg');
+        $name = time() . '.jpg';
+        Storage::put($name, $img);
+        Storage::move($name, 'public\images\''.$name);
+        
+        $product->img=$name;
         $product->status = $request->input('status');
         $product->is_new = $request->input('is_new');
         $product->is_recommended = $request->input('is_recommended');
         $product->code = $request->input('code');
         $product->description = $request->input('description');
         $product->category_id = $request->input('category_id');
+
         $product->save();
 
         return Redirect::to('admin/product/view');

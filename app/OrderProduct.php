@@ -17,14 +17,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model {
+class OrderProduct extends Model {
 
-    public function user() {
-        return $this->belongsTo('App\User');
-    }
+    protected $table = 'order_product';
 
-    public function products() {
-        return $this->belongsToMany('App\Product')->withPivot('quantity');
-    }
+    protected $fillable = ['order_id', 'product_id', 'quantity'];
 
 }

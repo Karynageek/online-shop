@@ -88,7 +88,7 @@
                     Jewerly
                 </div>
                 <div class="links">
-                    <a href="/">Online-shop</a>
+                    <a href="{{route('shop-view')}}">Online-shop</a>
                 </div>
             </div>
         </div>

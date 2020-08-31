@@ -18,6 +18,18 @@ Route::get('/', function () {
 });
 //Authorization
 Auth::routes();
+Route::get('/shop/view', 'SiteController@show')->name('shop-view');
+Route::get('/catalog/view/{id}', 'CatalogController@show')->name('catalog-view');
+Route::get('/cart/{id}', 'CartController@addToCart')->name('add-to-cart');
+
+Route::get('/my-orders', 'OrdersController@index')->name('orders.index');
+Route::get('/my-orders/{order}', 'OrdersController@show')->name('orders.show');
+
+Route::get('/cart', 'CartController@index')->name('cart.index');
+Route::post('/cart/{product}', 'CartController@store')->name('cart.store');
+Route::patch('/cart/{product}', 'CartController@update')->name('cart.update');
+Route::delete('/cart/{product}', 'CartController@destroy')->name('cart.destroy');
+Route::post('/cart/switchToSaveForLater/{product}', 'CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
 
 Route::group(['prefix' => 'admin'], function() {
     Route::group(['middleware' => ['auth', 'admin']], function() {
@@ -37,7 +49,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('/category/edit/{id}', 'AdminCategoryController@edit')->name('admin-category-edit');
         Route::post('/category/edit/{id}', 'AdminCategoryController@update')->name('form-admin-category-edit');
         Route::get('/category/delete/{id}', 'AdminCategoryController@destroy')->name('admin-category-delete');
-        
+
         //Manage products: 
         Route::get('/product/create', 'AdminProductController@create')->name('admin-product-create');
         Route::post('/product/create', 'AdminProductController@store')->name('form-admin-product-create');
@@ -45,7 +57,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('/product/edit/{id}', 'AdminProductController@edit')->name('admin-product-edit');
         Route::post('/product/edit/{id}', 'AdminProductController@update')->name('form-admin-product-edit');
         Route::get('/product/delete/{id}', 'AdminProductController@destroy')->name('admin-product-delete');
-        
+
         //Manage orders: 
         Route::get('/order/create', 'AdminOrderController@create')->name('admin-order-create');
         Route::post('/order/create', 'AdminOrderController@store')->name('form-admin-order-create');

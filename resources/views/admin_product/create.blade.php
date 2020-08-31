@@ -44,6 +44,10 @@
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
+                    <div class="form-group">
+                        <label for="img">Image</label>
+                        <input id="img" type="file" multiple name="img">
+                    </div>
                     <p>Status</p>
                     <select id="status" class="form-control 
                             @error('status') is-invalid @enderror" 
@@ -92,9 +96,9 @@
                     @enderror
                     <p>Description</p>
                     <textarea id="description" type="text" class="form-control 
-                           @error('description') is-invalid @enderror" 
-                           name="description" value="{{ old('description') }}" 
-                           required=""></textarea>
+                              @error('description') is-invalid @enderror" 
+                              name="description" value="{{ old('description') }}" 
+                              required=""></textarea>
                     @error('description')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

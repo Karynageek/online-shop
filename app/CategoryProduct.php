@@ -17,14 +17,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model {
+class CategoryProduct extends Model
+{
+    protected $table = 'category_product';
 
-    public function user() {
-        return $this->belongsTo('App\User');
-    }
-
-    public function products() {
-        return $this->belongsToMany('App\Product')->withPivot('quantity');
-    }
-
+    protected $fillable = ['product_id', 'category_id'];
 }

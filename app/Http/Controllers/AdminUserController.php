@@ -19,7 +19,7 @@ class AdminUserController extends Controller {
     }
 
     public function show() {
-        $users = User::paginate(5);
+        $users = User::where('role_id', 1)->paginate(5);
 
         return View::make('admin_user.view')
                         ->with('users', $users);

@@ -19,4 +19,11 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Product extends Eloquent {
 
+    protected $fillable = ['quantity'];
+    protected $table = 'products';
+
+    public function categories() {
+        return $this->belongsToMany('App\Category');
+    }
+
 }
