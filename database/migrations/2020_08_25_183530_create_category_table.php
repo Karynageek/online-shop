@@ -18,8 +18,7 @@ class CreateCategoryTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->enum('status', ['Hidden','Shown'])->default('Hidden');
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->timestamps();
         });
     }
 

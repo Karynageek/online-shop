@@ -5,9 +5,15 @@
         <group>
             <file>file:/C:/xampp/htdocs/online-shop/app/Http/Controllers/CatalogController.php</file>
             <file>file:/C:/xampp/htdocs/online-shop/resources/views/catalog/view.blade.php</file>
+            <file>file:/C:/xampp/htdocs/online-shop/app/OrderProduct.php</file>
             <file>file:/C:/xampp/htdocs/online-shop/routes/web.php</file>
+            <file>file:/C:/xampp/htdocs/online-shop/app/Order.php</file>
+            <file>file:/C:/xampp/htdocs/online-shop/app/CategoryProduct.php</file>
             <file>file:/C:/xampp/htdocs/online-shop/app/Http/Controllers/CartController.php</file>
+            <file>file:/C:/xampp/htdocs/online-shop/app/Product.php</file>
             <file>file:/C:/xampp/htdocs/online-shop/resources/views/site/view.blade.php</file>
+            <file>file:/C:/xampp/htdocs/online-shop/app/Category.php</file>
+            <file>file:/C:/xampp/htdocs/online-shop/app/User.php</file>
             <file>file:/C:/xampp/htdocs/online-shop/resources/views/layouts/app.blade.php</file>
         </group>
     </open-files>

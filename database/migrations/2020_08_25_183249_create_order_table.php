@@ -15,25 +15,20 @@ class CreateOrderTable extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->bigIncrements('id');
-            $table->string('user_name');
-            $table->string('user_email');
-            $table->bigInteger('user_phone');
-            $table->string('user_comment')->nullable();
-            $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('product_id')->unsigned();
-            $table->enum('status', ['New order', 'Processing', 'Delivered', 'Closed'])->default('New order');
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->string('billing_name')->nullable();
+            $table->string('billing_email')->nullable();
+            $table->bigInteger('billing_phone')->nullable();
+            $table->string('billing_address')->nullable();
+            $table->string('billing_name_on_card')->nullable();
+            $table->integer('billing_total');
+            $table->timestamps();
 
+            $table->bigInteger('user_id')->unsigned();
             $table->index('user_id');
             $table->foreign('user_id')
                     ->references('id')->on('users')
                     ->onDelete('cascade')
                     ->onUpdate('cascade');
-
-            $table->index('product_id');
-            $table->foreign('product_id')
-                    ->references('id')->on('products');
         });
     }
 
