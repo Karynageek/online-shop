@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Product;
 use App\Category;
+use App\CategoryProduct;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProductRequest;
@@ -39,25 +40,27 @@ class AdminProductController extends Controller {
      */
     public function store(ProductRequest $request) {
         $product = new Product;
+        $catalog = new CategoryProduct;
 
         $product->name = $request->input('name');
         $product->price = $request->input('price');
-        $product->count = $request->input('count');
+        $product->quantity = $request->input('quantity');
 
         $img = \Image::make($request->file('img'))->fit(300)->encode('jpg');
         $name = time() . '.jpg';
         Storage::put($name, $img);
-        Storage::move($name, 'public\images\''.$name);
-        
-        $product->img=$name;
+        Storage::move($name, "public\images\'" . $name);
+
+        $product->image = $name;
         $product->status = $request->input('status');
-        $product->is_new = $request->input('is_new');
         $product->is_recommended = $request->input('is_recommended');
         $product->code = $request->input('code');
         $product->description = $request->input('description');
-        $product->category_id = $request->input('category_id');
-
         $product->save();
+
+        $catalog->product_id = $product->id;
+        $catalog->category_id = $request->input('category_id');
+        $catalog->save();
 
         return Redirect::to('admin/product/view');
     }
@@ -65,23 +68,28 @@ class AdminProductController extends Controller {
     public function edit($id) {
         $categories = Category::all();
         $product = Product::find($id);
+        $catalog = CategoryProduct::where('product_id', $id)->first();
+       // $category = Category::where('id', $catalog->id)->first();
         return View::make('admin_product.update')
                         ->with('product', $product)
-                        ->with('categories', $categories);
+                        ->with('categories', $categories)
+                        ->with('catalog', $catalog);
     }
 
     public function update($id, ProductRequest $request) {
         $product = Product::find($id);
+        $catalog = CategoryProduct::where('product_id', $id)->first();
         $product->name = $request->input('name');
         $product->price = $request->input('price');
-        $product->count = $request->input('count');
+        $product->quantity = $request->input('quantity');
         $product->status = $request->input('status');
-        $product->is_new = $request->input('is_new');
         $product->is_recommended = $request->input('is_recommended');
         $product->code = $request->input('code');
         $product->description = $request->input('description');
-        $product->category_id = $request->input('category_id');
         $product->save();
+
+        $catalog->category_id = $request->input('category_id');
+        $catalog->save();
 
         return Redirect::to('admin/product/view');
     }

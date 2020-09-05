@@ -1,14 +1,10 @@
-<div class="products-section my-orders container">
-        <div class="sidebar">
+@extends('layouts.app')
 
-            <ul>
-              <li><a href="{{ route('users.edit') }}">My Profile</a></li>
-              <li class="active"><a href="{{ route('orders.index') }}">My Orders</a></li>
-            </ul>
-        </div> <!-- end sidebar -->
+@section('content')
+<div class="products-section my-orders container">
         <div class="my-profile">
             <div class="products-header">
-                <h1 class="stylish-heading">My Orders</h1>
+                <h3 class="stylish-heading">My Orders</h3>
             </div>
 
             <div>
@@ -58,3 +54,4 @@
             <div class="spacer"></div>
         </div>
     </div>
+    @endsection

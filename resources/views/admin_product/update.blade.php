@@ -34,12 +34,12 @@
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
-                    <p>Count</p>
-                    <input id="count" type="number" class="form-control 
-                           @error('count') is-invalid @enderror" 
-                           name="count" value="{{$product->count}}" 
+                    <p>Quantity</p>
+                    <input id="quantity" type="number" class="form-control 
+                           @error('quantity') is-invalid @enderror" 
+                           name="quantity" value="{{$product->quantity}}" 
                            required="">
-                    @error('count')
+                    @error('quantity')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -62,18 +62,6 @@
                            name="code" value="{{$product->code}}" 
                            required="">
                     @error('code')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                    <p>Is new</p>
-                    <select id="is_new" class="form-control 
-                            @error('is_new') is-invalid @enderror" 
-                            name="is_new">
-                        <option value="0" @if ($product->is_new == 0) selected="selected" @endif >No</option>
-                        <option value="1" @if ($product->is_new == 1) selected="selected" @endif >Yes</option>
-                    </select>
-                    @error('is_new')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -103,9 +91,9 @@
                     <p>Category</p>
                     <select id="category_id" class="form-control 
                             @error('category_id') is-invalid @enderror" 
-                            name="category_id"">
+                            name="category_id">
                         @foreach($categories as $key => $value)
-                        <option value="{{ $value->id }}" @if ($product->category_id == $value->id) selected="selected" @endif >{{$value->name}}</option>
+                        <option value="{{ $value->id }}" @if ($catalog->category_id == $value->id) selected="selected" @endif >{{$value->name}}</option>
                         @endforeach
                     </select>
                     <br/>

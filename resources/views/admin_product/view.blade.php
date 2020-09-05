@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section>
+
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -18,11 +18,9 @@
                         <th scope="col">ID</th>
                         <th scope="col">Name</th>
                         <th scope="col">Price</th>
-                        <th scope="col">Count</th>
+                        <th scope="col">Quantity</th>
                         <th scope="col">Status</th>
                         <th scope="col">Code</th>
-                        <th scope="col">Category_id</th>
-                        <th scope="col">Is new</th>
                         <th scope="col">Is recommended</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
@@ -35,11 +33,9 @@
                         <td><p class="card-title">{{ $value->id }}</p></td>
                         <td><p class="card-title">{{ $value->name }}</p></td>
                         <td><p class="card-title">{{ $value->price }}</p></td>
-                        <td><p class="card-title">{{ $value->count }}</p></td>
+                        <td><p class="card-title">{{ $value->quantity }}</p></td>
                         <td><p class="card-title">{{ $value->status }}</p></td>
                         <td><p class="card-title">{{ $value->code }}</p></td>
-                        <td><p class="card-title">{{ $value->category_id }}</p></td>
-                        <td><p class="card-title">{{ $value->is_new }}</p></td>
                         <td><p class="card-title">{{ $value->is_recommended }}</p></td>
                         <td><a href="{{route('admin-product-edit', $value->id) }}" class="btn btn-primary">Edit</a></td>
                         <td><a href="{{route('admin-product-delete', $value->id) }}" class="btn btn-danger">Delete</a></td>

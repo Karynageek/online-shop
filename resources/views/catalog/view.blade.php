@@ -27,7 +27,7 @@
                             @foreach($products as $key => $value)
                             <div class="col-md-4">
                                 <div class="card mb-4 shadow-sm">
-                                    <img class="bd-placeholder-img card-img-top" width="100%" height="200" src="{{ asset('storage/app/public/images/'.$value->img) }}">
+                                    <img class="bd-placeholder-img card-img-top" width="100%" height="200" src="{{ asset('storage/app/public/images/'.$value->image) }}">
                                     <div class="card-body">
                                         <p class="card-text">${{$value->price}}</p>
                                         <p class="card-text"><a href="/product/{{$value->id}}">

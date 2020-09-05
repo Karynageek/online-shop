@@ -34,12 +34,12 @@
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
-                    <p>Count</p>
-                    <input id="count" type="number" class="form-control 
-                           @error('count') is-invalid @enderror" 
-                           name="count" value="{{ old('count') }}" 
+                    <p>Quantity</p>
+                    <input id="quantity" type="number" class="form-control 
+                           @error('quantity') is-invalid @enderror" 
+                           name="quantity" value="{{ old('quantity') }}" 
                            required="">
-                    @error('count')
+                    @error('quantity')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -66,18 +66,6 @@
                            name="code" value="{{ old('code') }}" 
                            required="">
                     @error('code')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                    <p>Is new</p>
-                    <select id="is_new" class="form-control 
-                            @error('is_new') is-invalid @enderror" 
-                            name="is_new" value="{{ old('is_new') }}">
-                        <option value="0" selected="selected">No</option>
-                        <option value="1">Yes</option>
-                    </select>
-                    @error('is_new')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
