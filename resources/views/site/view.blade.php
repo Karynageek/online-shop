@@ -27,16 +27,19 @@
                             @foreach($latestProducts as $key => $value)
                             <div class="col-md-4">
                                 <div class="card mb-4 shadow-sm">
-                                    <img class="bd-placeholder-img card-img-top" width="100%" height="200" src="/storage/app/public/images/1598804037.jpg">
+                                    <img class="bd-placeholder-img card-img-top" width="100%" height="200" src="{{ asset('storage/app/public/images/'.$value->image) }}">
                                     <div class="card-body">
                                         <p class="card-text">${{$value->price}}</p>
                                         <p class="card-text"><a href="/product/{{$value->id}}">
                                                 {{$value->name}}
                                             </a></p>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <div class="btn-group">
-                                                <a href="{{route('add-to-cart', $value->id)}}" class="btn btn-sm btn-outline-secondary">In cart</a>
-                                            </div>
+                                            @if ($value->quantity > 0)
+                                            <form action="{{ route('cart-store', $value->id) }}" method="POST">
+                                                {{ csrf_field() }}
+                                                <button type="submit" name="submit1" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            </form>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -62,9 +65,12 @@
                                                 {{$value->name}}
                                             </a></p>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <div class="btn-group">
-                                                <a href="#" class="btn btn-sm btn-outline-secondary">In cart</a>
-                                            </div>
+                                            @if ($value->quantity > 0)
+                                            <form action="{{ route('cart-store', $value->id) }}" method="POST">
+                                                {{ csrf_field() }}
+                                                <button type="submit" name="submit2" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            </form>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

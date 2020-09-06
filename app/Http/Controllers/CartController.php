@@ -6,109 +6,66 @@ use App\Product;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
+use Auth;
 
 class CartController extends Controller {
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index() {
-        $mightAlsoLike = Product::mightAlsoLike()->get();
+    public function __construct() {
+        $this->middleware('user');
+    }
 
-        return view('cart.cart')->with([
-                    'mightAlsoLike' => $mightAlsoLike,
-                    'discount' => getNumbers()->get('discount'),
-                    'newSubtotal' => getNumbers()->get('newSubtotal'),
-                    'newTax' => getNumbers()->get('newTax'),
-                    'newTotal' => getNumbers()->get('newTotal'),
+    public function addToCart($id) {
+        if (session()->has('cart')) {
+            $oldCart = session()->get('cart');
+            $cartdata = $oldCart;
+            if (array_key_exists('product_id', $cartdata)) {
+                if (in_array($id, $cartdata)) {
+                    $cartdata['quantity'] += 1;
+                } else {
+                    $cartdata['product_id'] = $id;
+                    $cartdata['quantity'] = 1;
+                }
+            }
+        } else {
+            $cartdata = [];
+            $cartdata['product_id'] = $id;
+            $cartdata['quantity'] = 1;
+        }
+        session()->put('cart', $cartdata);
+        // dd(session()->get("cart"));
+        session()->flash('message', 'Item added to cart !');
+
+        return back();
+    }
+
+    public function view() {
+        $cart_items = null;
+        $session_cart_items = null;
+        if (\Session::get('cart')) {
+            $session_cart_items = [];
+            foreach (session('cart') as $session_cart_items[]) {
+                $session_cart_items['product'] = Product::where('id', session('cart.product_id'))->get();
+                $session_cart_items['quantity'] = session('cart.quantity');
+            }
+        }
+        $cart_items_count = count(\Session::get('cart'));
+        return View::make('cart.view')
+                        ->with([
+                            'cart_items' => $cart_items, 'cart_items_count' => $cart_items_count,
+                            'session_cart_items' => $session_cart_items,
         ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Product $product) {
-        $duplicates = Cart::search(function ($cartItem, $rowId) use ($product) {
-                    return $cartItem->id === $product->id;
-                });
-
-        if ($duplicates->isNotEmpty()) {
-            return redirect()->route('cart.index')->with('success_message', 'Item is already in your cart!');
-        }
-
-        Cart::add($product->id, $product->name, 1, $product->price)
-                ->associate('App\Product');
-
-        return redirect()->route('cart.index')->with('success_message', 'Item was added to your cart!');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id) {
-        $validator = Validator::make($request->all(), [
-                    'quantity' => 'required|numeric|between:1,5'
-        ]);
-
-        if ($validator->fails()) {
-            session()->flash('errors', collect(['Quantity must be between 1 and 5.']));
-            return response()->json(['success' => false], 400);
-        }
-
-        if ($request->quantity > $request->productQuantity) {
-            session()->flash('errors', collect(['We currently do not have enough items in stock.']));
-            return response()->json(['success' => false], 400);
-        }
-
-        Cart::update($id, $request->quantity);
-        session()->flash('success_message', 'Quantity was updated successfully!');
-        return response()->json(['success' => true]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id) {
-        Cart::remove($id);
-
-        return back()->with('success_message', 'Item has been removed!');
-    }
-
-    /**
-     * Switch item for shopping cart to Save for Later.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function switchToSaveForLater($id) {
-        $item = Cart::get($id);
-
-        Cart::remove($id);
-
-        $duplicates = Cart::instance('saveForLater')->search(function ($cartItem, $rowId) use ($id) {
-            return $rowId === $id;
-        });
-
-        if ($duplicates->isNotEmpty()) {
-            return redirect()->route('cart.index')->with('success_message', 'Item is already Saved For Later!');
-        }
-
-        Cart::instance('saveForLater')->add($item->id, $item->name, 1, $item->price)
-                ->associate('App\Product');
-
-        return redirect()->route('cart.index')->with('success_message', 'Item has been Saved For Later!');
     }
 
 }
+
+//    public function delCartItem(Request $request, $id) {
+//        if (session()->has('cart')) {
+//            $oldCart = session()->get('cart');
+//            $cartdata = $oldCart;
+//            $cartdata->del($cartdata, $cartdata->product_id);
+//            $request->session()->put('cart', $cartdata);
+//            return redirect()->route('shop-view');
+//        }
+//    }
+

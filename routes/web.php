@@ -16,20 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
 //Authorization
 Auth::routes();
-Route::get('/shop/view', 'SiteController@show')->name('shop-view');
-Route::get('/catalog/view/{id}', 'CatalogController@show')->name('catalog-view');
-Route::get('/cart/{id}', 'CartController@addToCart')->name('add-to-cart');
 
-Route::get('/my-orders', 'OrdersController@index')->name('orders.index');
-Route::get('/my-orders/{order}', 'OrdersController@show')->name('orders.show');
-
-Route::get('/cart', 'CartController@index')->name('cart.index');
-Route::post('/cart/{product}', 'CartController@store')->name('cart.store');
-Route::patch('/cart/{product}', 'CartController@update')->name('cart.update');
-Route::delete('/cart/{product}', 'CartController@destroy')->name('cart.destroy');
-Route::post('/cart/switchToSaveForLater/{product}', 'CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
+//Shop
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/shop/view', 'SiteController@show')->name('shop-view');
+    Route::get('/catalog/view/{id}', 'CatalogController@show')->name('catalog-view');
+});
 
 Route::group(['prefix' => 'admin'], function() {
     Route::group(['middleware' => ['auth', 'admin']], function() {
@@ -49,6 +44,9 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('/category/edit/{id}', 'AdminCategoryController@edit')->name('admin-category-edit');
         Route::post('/category/edit/{id}', 'AdminCategoryController@update')->name('form-admin-category-edit');
         Route::get('/category/delete/{id}', 'AdminCategoryController@destroy')->name('admin-category-delete');
+        //Manage products: 
+        Route::get('/product/create', 'AdminProductController@create')->name('admin-product-create');
+        Route::post('/product/create', 'AdminProductController@store')->name('form-admin-product-create');
 
         //Manage products: 
         Route::get('/product/create', 'AdminProductController@create')->name('admin-product-create');
@@ -77,6 +75,15 @@ Route::group(['prefix' => 'user'], function() {
         Route::get('/settings/edit/{id}', 'SettingsController@edit')->name('user-settings');
         Route::post('/settings/edit/nickname/{id}', 'SettingsController@updateNickname')->name('form-user-edit-nickname');
         Route::post('/settings/edit/pass/{id}', 'SettingsController@updatePass')->name('form-user-edit-pass');
+
+        //Cart:
+        Route::post('/cart/{id}', 'CartController@addToCart')->name('cart-store');
+        Route::get('/cart', 'CartController@view')->name('cart-view');
+        Route::get('/cart/delete', 'CartController@delCartItem')->name('cart-delete');
+
+        //Order:
+        Route::get('/my-orders', 'OrdersController@index')->name('orders.index');
+        Route::get('/my-orders/{order}', 'OrdersController@show')->name('orders.show');
     });
 });
 

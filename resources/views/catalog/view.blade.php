@@ -34,9 +34,12 @@
                                                 {{$value->name}}
                                             </a></p>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <div class="btn-group">
-                                                <a href="#" class="btn btn-sm btn-outline-secondary">In cart</a>
-                                            </div>
+                                            @if ($value->quantity > 0)
+                                            <form action="/cart/{{$value->id}}" method="POST">
+                                                {{ csrf_field() }}
+                                                <button type="submit" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            </form>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
