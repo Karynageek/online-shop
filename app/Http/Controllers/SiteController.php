@@ -11,20 +11,10 @@ use Illuminate\Support\Facades\DB;
 
 class SiteController extends Controller {
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct() {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function show() {
         $categories = Category::where('status', 'Shown')->get();
         $latestProducts = DB::table('products')

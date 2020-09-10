@@ -12,20 +12,10 @@ use Illuminate\Support\Facades\DB;
 
 class CatalogController extends Controller {
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct() {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function show($id) {
         $categories = Category::where('status', 'Shown')->get();
         $products = DB::table('products')

@@ -29,13 +29,8 @@ class AdminOrderController extends Controller {
         return View::make('admin_order.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
     public function store(OrderRequest $request) {
-        $order = new Order;
+        $order = new Order();
         $order->user_name = $request->input('user_name');
         $order->user_email = $request->input('user_email');
         $order->user_phone = $request->input('user_phone');

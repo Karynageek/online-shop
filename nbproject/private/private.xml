@@ -3,15 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/online-shop/resources/views/order/my-orders.blade.php</file>
-            <file>file:/C:/xampp/htdocs/online-shop/routes/web.php</file>
-            <file>file:/C:/xampp/htdocs/online-shop/app/Order.php</file>
-            <file>file:/C:/xampp/htdocs/online-shop/app/Http/Controllers/AdminProductController.php</file>
-            <file>file:/C:/xampp/htdocs/online-shop/resources/views/admin_product/view.blade.php</file>
-            <file>file:/C:/xampp/htdocs/online-shop/resources/views/order/my-order.blade.php</file>
-            <file>file:/C:/xampp/htdocs/online-shop/resources/views/admin_product/create.blade.php</file>
-            <file>file:/C:/xampp/htdocs/online-shop/resources/views/admin_product/update.blade.php</file>
-            <file>file:/C:/xampp/htdocs/online-shop/app/Product.php</file>
+            <file>file:/C:/xampp/htdocs/online-shop/app/Http/Controllers/CartController.php</file>
+            <file>file:/C:/xampp/htdocs/online-shop/resources/views/cart/view.blade.php</file>
         </group>
     </open-files>
 </project-private>

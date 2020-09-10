@@ -29,13 +29,8 @@ class AdminCategoryController extends Controller {
         return View::make('admin_category.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
     public function store(CategoryRequest $request) {
-        $category = new Category;
+        $category = new Category();
         $category->name = $request->input('name');
         $category->status = $request->input('status');
         $category->save();

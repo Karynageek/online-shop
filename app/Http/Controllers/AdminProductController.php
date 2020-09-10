@@ -33,14 +33,9 @@ class AdminProductController extends Controller {
                         ->with('categories', $categories);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
     public function store(ProductRequest $request) {
-        $product = new Product;
-        $catalog = new CategoryProduct;
+        $product = new Product();
+        $catalog = new CategoryProduct();
 
         $product->name = $request->input('name');
         $product->price = $request->input('price');
@@ -69,7 +64,6 @@ class AdminProductController extends Controller {
         $categories = Category::all();
         $product = Product::find($id);
         $catalog = CategoryProduct::where('product_id', $id)->first();
-       // $category = Category::where('id', $catalog->id)->first();
         return View::make('admin_product.update')
                         ->with('product', $product)
                         ->with('categories', $categories)

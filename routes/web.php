@@ -79,7 +79,8 @@ Route::group(['prefix' => 'user'], function() {
         //Cart:
         Route::post('/cart/{id}', 'CartController@addToCart')->name('cart-store');
         Route::get('/cart', 'CartController@view')->name('cart-view');
-        Route::get('/cart/delete', 'CartController@delCartItem')->name('cart-delete');
+        Route::patch('/cart/update/{id}', 'CartController@update')->name('cart-update');
+        Route::get('/cart/remove/{id}', 'CartController@remove')->name('cart-delete');
 
         //Order:
         Route::get('/my-orders', 'OrdersController@index')->name('orders.index');

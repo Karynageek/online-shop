@@ -15,57 +15,77 @@ class CartController extends Controller {
         $this->middleware('user');
     }
 
-    public function addToCart($id) {
-        if (session()->has('cart')) {
-            $oldCart = session()->get('cart');
-            $cartdata = $oldCart;
-            if (array_key_exists('product_id', $cartdata)) {
-                if (in_array($id, $cartdata)) {
-                    $cartdata['quantity'] += 1;
-                } else {
-                    $cartdata['product_id'] = $id;
-                    $cartdata['quantity'] = 1;
-                }
-            }
-        } else {
-            $cartdata = [];
-            $cartdata['product_id'] = $id;
-            $cartdata['quantity'] = 1;
+    public function view() {
+        $products = session('cart');
+        $total = 0;
+        foreach ($products as $key => $value) {
+            $total += $value['price'] * $value['quantity'];
         }
-        session()->put('cart', $cartdata);
-        // dd(session()->get("cart"));
-        session()->flash('message', 'Item added to cart !');
-
-        return back();
+        return View::make('cart.view')
+                        ->with('products', $products)
+                        ->with('total', $total);
     }
 
-    public function view() {
-        $cart_items = null;
-        $session_cart_items = null;
-        if (\Session::get('cart')) {
-            $session_cart_items = [];
-            foreach (session('cart') as $session_cart_items[]) {
-                $session_cart_items['product'] = Product::where('id', session('cart.product_id'))->get();
-                $session_cart_items['quantity'] = session('cart.quantity');
-            }
+    public function addToCart($id) {
+        $product = Product::find($id);
+        if (!$product) {
+            abort(404);
         }
-        $cart_items_count = count(\Session::get('cart'));
-        return View::make('cart.view')
-                        ->with([
-                            'cart_items' => $cart_items, 'cart_items_count' => $cart_items_count,
-                            'session_cart_items' => $session_cart_items,
-        ]);
+        $cart = session()->get('cart');
+// if cart is empty then this the first product
+        if (!$cart) {
+            $cart = [
+                $id => [
+                    "name" => $product->name,
+                    "quantity" => 1,
+                    "price" => $product->price,
+                    "photo" => $product->image
+                ]
+            ];
+            session()->put('cart', $cart);
+
+            return redirect()->back()->with('success', 'Product added to cart successfully!');
+        }
+
+// if cart not empty then check if this product exist then increment quantity
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+            session()->put('cart', $cart);
+
+            return redirect()->back()->with('success', 'Product added to cart successfully!');
+        }
+
+// if item not exist in cart then add to cart with quantity = 1
+        $cart[$id] = [
+            "name" => $product->name,
+            "quantity" => 1,
+            "price" => $product->price,
+            "photo" => $product->image
+        ];
+        session()->put('cart', $cart);
+
+        return redirect()->back()->with('success', 'Product added to cart successfully!');
+    }
+
+    public function update(Request $request) {
+        if ($request->id and $request->quantity) {
+            $cart = session()->get('cart');
+            $cart[$request->id]["quantity"] = $request->quantity;
+            session()->push('cart', $cart);
+            session()->flash('success', 'Cart updated successfully');
+        }
+    }
+
+    public function remove(Request $request) {
+        if ($request->id) {
+            $cart = session()->get('cart');
+            if (isset($cart[$request->id])) {
+                unset($cart[$request->id]);
+                session()->push('cart', $cart);
+            }
+
+            session()->flash('success', 'Product removed successfully');
+        }
     }
 
 }
-
-//    public function delCartItem(Request $request, $id) {
-//        if (session()->has('cart')) {
-//            $oldCart = session()->get('cart');
-//            $cartdata = $oldCart;
-//            $cartdata->del($cartdata, $cartdata->product_id);
-//            $request->session()->put('cart', $cartdata);
-//            return redirect()->route('shop-view');
-//        }
-//    }
-

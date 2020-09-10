@@ -35,19 +35,14 @@ class AdminUserController extends Controller {
         return View::make('admin_user.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
     public function store(UserRequest $request) {
-        $user = new User;
+        $user = new User();
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->save();
 
-        $account = new Account;
+        $account = new Account();
         $account->user_id = $user->id;
         $account->save();
 
