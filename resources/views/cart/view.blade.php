@@ -28,63 +28,34 @@
                     </div>
                 </div>
             </td>
-            <td data-th="Price">${{ $value['price'] }}</td>
-            <td data-th="Quantity">
-                <input type="number" value="{{ $value['quantity'] }}" class="form-control quantity" />
-            </td>
-            <td data-th="Subtotal" class="text-center">${{ $value['price'] * $value['quantity'] }}</td>
-            <td class="actions" data-th="">
-                <a href="{{route('cart-update', $key) }}" class="btn btn-info btn-sm update-cart">Update</a>
-                <a href="{{route('cart-delete', $key) }}" class="btn btn-danger btn-sm remove-from-cart">Delete</a>
-            </td>
-        </tr>
-        @endforeach
-        @endif
+    <form action="{{route('cart-update', $key) }}" method="post">
+        @csrf
+        <td data-th="Price">${{ $value['price'] }}</td>
+        <td data-th="Quantity">
+            <input type="number" name ="quantity" value="{{ $value['quantity'] }}" class="form-control quantity" />
+        </td>
+        <td data-th="Subtotal" class="text-center">${{ $value['price'] * $value['quantity'] }}</td>
+        <td class="actions" data-th="">           
+            <button class="btn btn-info btn-sm update-cart" type="submit">Update</button>
+            <a href="{{route('cart-delete', $key) }}" class="btn btn-danger btn-sm remove-from-cart">Delete</a>
+    </form>
+</td>
+</tr>
+@endforeach
+@endif
 
-    </tbody>
-    <tfoot>
-        <tr>
-            <td><a href="{{ route('shop-view') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-            <td colspan="2" class="hidden-xs"></td>
-            <td class="hidden-xs text-center"><strong>Total ${{ $total }}</strong></td>
-        </tr>
-    </tfoot>
+</tbody>
+<tfoot>
+    <tr>
+        <td>
+            <a href="{{ route('shop-view') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
+            <a href="{{ route('order-create') }}" class="btn btn-success"><i class="fa fa-angle-left"></i> Checkout</a>
+        </td>
+
+        <td colspan="2" class="hidden-xs"></td>
+        <td class="hidden-xs text-center"><strong>Total ${{ $total }}</strong></td>
+    </tr>
+</tfoot>
 </table>
-
-@endsection
-
-@section('scripts')
-
-
-<script type="text/javascript">
-
-    $(".update-cart").click(function (e) {
-    e.preventDefault();
-    var ele = $(this);
-    $.ajax({
-    url: '{{ url('update - cart') }}',
-            method: "patch",
-            data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: ele.parents("tr").find(".quantity").val()},
-            success: function (response) {
-            window.location.reload();
-            }
-    });
-    });
-    $(".remove-from-cart").click(function (e) {
-    e.preventDefault();
-    var ele = $(this);
-    if (confirm("Are you sure")) {
-    $.ajax({
-    url: '{{ url('remove - from - cart') }}',
-            method: "DELETE",
-            data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id")},
-            success: function (response) {
-            window.location.reload();
-            }
-    });
-    }
-    });
-
-</script>
 
 @endsection

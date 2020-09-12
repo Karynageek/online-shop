@@ -79,12 +79,12 @@ Route::group(['prefix' => 'user'], function() {
         //Cart:
         Route::post('/cart/{id}', 'CartController@addToCart')->name('cart-store');
         Route::get('/cart', 'CartController@view')->name('cart-view');
-        Route::patch('/cart/update/{id}', 'CartController@update')->name('cart-update');
+        Route::post('/cart/update/{id}', 'CartController@update')->name('cart-update');
         Route::get('/cart/remove/{id}', 'CartController@remove')->name('cart-delete');
 
         //Order:
-        Route::get('/my-orders', 'OrdersController@index')->name('orders.index');
-        Route::get('/my-orders/{order}', 'OrdersController@show')->name('orders.show');
+        Route::get('/order/checkout', 'OrdersController@create')->name('order-create');
+        Route::post('/order/checkout', 'OrdersController@store')->name('form-order-create');
     });
 });
 

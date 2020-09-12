@@ -67,25 +67,22 @@ class CartController extends Controller {
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 
-    public function update(Request $request) {
-        if ($request->id and $request->quantity) {
+    public function update(Request $request, $id) {
             $cart = session()->get('cart');
-            $cart[$request->id]["quantity"] = $request->quantity;
-            session()->push('cart', $cart);
-            session()->flash('success', 'Cart updated successfully');
-        }
+            if (isset($cart[$id])) {
+            $cart[$id]['quantity'] = $request->quantity;
+            session()->put('cart', $cart);
+            }
+        return redirect()->back()->with('success', 'Cart updated successfully');
     }
 
-    public function remove(Request $request) {
-        if ($request->id) {
-            $cart = session()->get('cart');
-            if (isset($cart[$request->id])) {
-                unset($cart[$request->id]);
-                session()->push('cart', $cart);
-            }
-
-            session()->flash('success', 'Product removed successfully');
+    public function remove($id) {
+        $cart = session()->get('cart');
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
         }
+        return redirect()->back()->with('success', 'Product removed successfully');
     }
 
 }
