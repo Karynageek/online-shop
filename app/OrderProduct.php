@@ -23,8 +23,4 @@ class OrderProduct extends Model {
 
     protected $fillable = ['order_id', 'product_id'];
     
-    protected $casts = [
-        'product_id' => 'array',
-    ];
-
 }
