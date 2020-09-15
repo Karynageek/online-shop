@@ -57,12 +57,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('/product/delete/{id}', 'AdminProductController@destroy')->name('admin-product-delete');
 
         //Manage orders: 
-        Route::get('/order/create', 'AdminOrderController@create')->name('admin-order-create');
-        Route::post('/order/create', 'AdminOrderController@store')->name('form-admin-order-create');
         Route::get('/order/view', 'AdminOrderController@show')->name('admin-order-view');
-        Route::get('/order/edit/{id}', 'AdminOrderController@edit')->name('admin-order-edit');
-        Route::post('/order/edit/{id}', 'AdminOrderController@update')->name('form-admin-order-edit');
-        Route::get('/order/delete/{id}', 'AdminOrderController@destroy')->name('admin-order-delete');
     });
 });
 

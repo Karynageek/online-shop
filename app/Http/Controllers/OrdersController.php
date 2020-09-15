@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use App\Order;
 use App\User;
+use App\OrderProduct;
 use Auth;
 
 class OrdersController extends Controller {
@@ -29,12 +29,16 @@ class OrdersController extends Controller {
 
     public function store(Request $request) {
         $order = new Order();
+        $order_product = new OrderProduct();
+        
         $user_id = Auth::user()->id;
         $user = User::find($user_id);
         $products = session('cart');
         $total = 0;
-        foreach ($products as $key => $value) {
+        $product_id=null;
+        foreach ($products as $product_id=> $value) {
             $total += $value['price'] * $value['quantity'];
+            //array($product_id);
         }
         $order->user_id = Auth::user()->id;
         $order->billing_name = $user->name;
@@ -44,6 +48,13 @@ class OrdersController extends Controller {
         $order->billing_name_on_card = $request->input('billing_name_on_card');
         $order->billing_total = $total;
         $order->save();
+           
+        $order_product->order_id = $order->id;
+        $order_product->product_id = $product_id;
+        //$order_product->product_id = serialize($product_id);
+        $order_product->save();
+        
+        session()->forget('cart');
 
         return Redirect::to('/shop/view');
     }

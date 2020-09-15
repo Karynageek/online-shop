@@ -32,7 +32,7 @@ class CreateOrderProductTable extends Migration {
                     ->onUpdate('cascade')
                     ->onDelete('set null');
 
-            $table->integer('quantity')->unsigned();
+            $table->timestamps();
         });
     }
 

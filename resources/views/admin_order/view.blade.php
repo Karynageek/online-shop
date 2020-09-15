@@ -15,10 +15,10 @@
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Phone</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Product ID</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Card</th>
+                        <th scope="col">Total, $</th>
+                        <th scope="col">Products id</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,13 +26,13 @@
                     <tr>
                         <td><p class="card-title">{{ $loop->index+1 }}</p></td>
                         <td><p class="card-title">{{ $value->id }}</p></td>
-                        <td><p class="card-title">{{ $value->name }}</p></td>
-                        <td><p class="card-title">{{ $value->email }}</p></td>
-                        <td><p class="card-title">{{ $value->phone }}</p></td>
-                        <td><p class="card-title">{{ $value->status }}</p></td>
+                        <td><p class="card-title">{{ $value->billing_name }}</p></td>
+                        <td><p class="card-title">{{ $value->billing_email }}</p></td>
+                        <td><p class="card-title">{{ $value->billing_phone }}</p></td>
+                        <td><p class="card-title">{{ $value->billing_address }}</p></td>
+                        <td><p class="card-title">{{ $value->billing_name_on_card }}</p></td>
+                        <td><p class="card-title">{{ $value->billing_total }}</p></td>
                         <td><p class="card-title">{{ $value->product_id }}</p></td>
-                        <td><a href="{{route('admin-order-edit', $value->id) }}" class="btn btn-primary">Edit</a></td>
-                        <td><a href="{{route('admin-order-delete', $value->id) }}" class="btn btn-danger">Delete</a></td>
                     </tr>
                     @endforeach
                 </tbody>
